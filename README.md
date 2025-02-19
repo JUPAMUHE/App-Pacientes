@@ -35,7 +35,7 @@ composer install
 
 Copia el archivo de configuración:
 
-cp .env.example .env
+Se debe modificar el archivo .env.example por .env
 
 Edita el archivo .env y configura la base de datos:
 
