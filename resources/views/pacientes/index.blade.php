@@ -18,6 +18,7 @@
         <thead>
             <tr>
                 <th>#</th>
+                <th>foto</th>
                 <th>Documento</th>
                 <th>Nombre Completo</th>
                 <th>Género</th>
@@ -30,6 +31,13 @@
             @foreach ($pacientes as $paciente)
             <tr>
                 <td>{{ $loop->iteration }}</td>
+                <td>
+                    @if ($paciente->foto)
+                        <img src="{{ asset('storage/' . $paciente->foto) }}" alt="Foto de {{ $paciente->nombre1 }}" width="50" height="50" class="rounded-circle">
+                    @else
+                        <img src="{{ asset('images/default-user.png') }}" alt="Sin foto" width="50" height="50" class="rounded-circle">
+                    @endif
+                </td>
                 <td>{{ $paciente->numero_documento }}</td>
                 <td>{{ $paciente->nombre1 }} {{ $paciente->nombre2 }} {{ $paciente->apellido1 }} {{ $paciente->apellido2 }}</td>
                 <td>{{ $paciente->genero->nombre }}</td>

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2 class="mb-3">Editar Paciente</h2>
-    <form id="formEditPaciente" action="{{ route('pacientes.update', $paciente->id) }}" method="POST">
+    <form id="formEditPaciente" action="{{ route('pacientes.update', $paciente->id) }}" method="POST"  enctype="multipart/form-data">
         @csrf
         @method('PUT')
     
@@ -93,6 +93,24 @@
                     </select>
                 </div>
             </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="foto" class="form-label">Foto del Paciente</label>
+                    <input type="file" name="foto" id="foto" class="form-control" accept="image/*">
+                    @if ($paciente->foto)
+                        <div class="mt-2">
+                            <img id="previewImagen" src="{{ asset('storage/' . $paciente->foto) }}" alt="Foto del paciente" class="img-thumbnail" width="150">
+                        </div>
+                    @else
+                        <div class="mt-2">
+                            <img id="previewImagen" src="{{ asset('images/default-user.png') }}" alt="Sin imagen" class="img-thumbnail" width="130">
+                        </div>
+                    @endif
+                </div>
+            </div>
+            
+
         </div>
 
         <div class="text-center mt-3">
@@ -104,9 +122,20 @@
 </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
+            $('#foto').on('change', function(event) {
+                let file = event.target.files[0]; 
+
+                if (file) {
+                    let reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#previewImagen').attr('src', e.target.result); 
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
 
             $("#formEditPaciente").validate({
                 rules: {
@@ -146,15 +175,17 @@
                 },
                 submitHandler: function (form) {
                     Swal.fire({
-                        title: "¿Estás seguro que desea guardar este registo?",
+                        title: "¿Estás seguro que desea actualizar este registo?",
                         icon: "warning",
                         showCancelButton: true,
-                        confirmButtonColor: "#d33",
+                        confirmButtonColor: "#16c457",
                         cancelButtonColor: "#6c757d",
-                        confirmButtonText: "Sí, guardar",
+                        confirmButtonText: "Sí, actualizar",
                         cancelButtonText: "Cancelar"
                     }).then((result) => {
-                        form.submit();
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
                     });
                 }
             });

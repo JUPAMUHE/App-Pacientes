@@ -4,10 +4,10 @@
 <div class="container">
     <h2 class="mb-3">Registrar Paciente</h2>
     
-    <form id="formPaciente" action="{{ route('pacientes.store') }}" method="POST">
+    <form id="formPaciente" action="{{ route('pacientes.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+    
         <div class="row">
-            <!-- Fila 1 -->
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="tipo_documento_id" class="form-label">Tipo de Documento*</label>
@@ -26,7 +26,6 @@
                 </div>
             </div>
     
-            <!-- Fila 2 -->
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="nombre1" class="form-label">Primer Nombre*</label>
@@ -40,7 +39,6 @@
                 </div>
             </div>
     
-            <!-- Fila 3 -->
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="apellido1" class="form-label">Primer Apellido*</label>
@@ -54,7 +52,6 @@
                 </div>
             </div>
     
-            <!-- Fila 4 -->
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="genero_id" class="form-label">Género*</label>
@@ -78,7 +75,6 @@
                 </div>
             </div>
     
-            <!-- Fila 5 -->
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="municipio_id" class="form-label">Municipio*</label>
@@ -87,9 +83,19 @@
                     </select>
                 </div>
             </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="foto" class="form-label">Foto de Perfil</label>
+                    <input type="file" name="foto" id="foto" class="form-control" accept="image/*">
+
+                    <div class="mt-2">
+                        <img id="previewImagen" src="{{ asset('images/default-user.png') }}" alt="Sin imagen" class="img-thumbnail" width="140">
+                    </div>
+                </div>
+            </div>
         </div>
     
-        <!-- Botones -->
         <div class="text-center mt-3">
             <button type="submit" class="btn btn-success">Guardar</button>
             <a href="{{ route('pacientes.index') }}" class="btn btn-secondary">Cancelar</a>
@@ -104,6 +110,17 @@
 
 <script>
     $(document).ready(function() {
+        $('#foto').on('change', function(event) {
+            let file = event.target.files[0]; 
+
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#previewImagen').attr('src', e.target.result); 
+                }
+                reader.readAsDataURL(file);
+            }
+        });
 
         $("#formPaciente").validate({
             rules: {
@@ -146,12 +163,14 @@
                     title: "¿Estás seguro que desea guardar este registo?",
                     icon: "warning",
                     showCancelButton: true,
-                    confirmButtonColor: "#d33",
+                    confirmButtonColor: "#16c457",
                     cancelButtonColor: "#6c757d",
                     confirmButtonText: "Sí, guardar",
                     cancelButtonText: "Cancelar"
                 }).then((result) => {
-                    form.submit();
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
                 });
             }
         });

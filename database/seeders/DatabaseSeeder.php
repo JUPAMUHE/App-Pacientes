@@ -39,7 +39,6 @@ class DatabaseSeeder extends Seeder
             ['departamento_id' => 5, 'nombre' => 'Turbaco', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
         ]);
 
-
        // Insertar Géneros
         DB::table('generos')->insert([
             ['nombre' => 'Masculino', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
@@ -53,6 +52,79 @@ class DatabaseSeeder extends Seeder
             ['nombre' => 'Tarjeta de Identidad', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
         ]);
 
+        DB::table('pacientes')->insert([
+            [
+                'tipo_documento_id' => 1,
+                'numero_documento' => '1001234567',
+                'nombre1' => 'Juan',
+                'nombre2' => 'Carlos',
+                'apellido1' => 'Pérez',
+                'apellido2' => 'Gómez',
+                'genero_id' => 1,
+                'departamento_id' => 1,
+                'municipio_id' => 1,
+                'foto' => null,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'tipo_documento_id' => 2,
+                'numero_documento' => '1029384756',
+                'nombre1' => 'María',
+                'nombre2' => null,
+                'apellido1' => 'Rodríguez',
+                'apellido2' => 'López',
+                'genero_id' => 2,
+                'departamento_id' => 2,
+                'municipio_id' => 3,
+                'foto' => null,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'tipo_documento_id' => 1,
+                'numero_documento' => '1109876543',
+                'nombre1' => 'Carlos',
+                'nombre2' => 'Eduardo',
+                'apellido1' => 'Martínez',
+                'apellido2' => null,
+                'genero_id' => 1,
+                'departamento_id' => 3,
+                'municipio_id' => 5,
+                'foto' => null,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'tipo_documento_id' => 1,
+                'numero_documento' => '1205647382',
+                'nombre1' => 'Ana',
+                'nombre2' => 'Isabel',
+                'apellido1' => 'González',
+                'apellido2' => 'Torres',
+                'genero_id' => 2,
+                'departamento_id' => 4,
+                'municipio_id' => 7,
+                'foto' => null,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'tipo_documento_id' => 1,
+                'numero_documento' => '1309876123',
+                'nombre1' => 'Samuel',
+                'nombre2' => null,
+                'apellido1' => 'Fernández',
+                'apellido2' => 'Díaz',
+                'genero_id' => 3,
+                'departamento_id' => 5,
+                'municipio_id' => 9,
+                'foto' => null,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+        ]);
+        
         // Insertar Usuario Administrador
         DB::table('users')->insert([
             'tipo_documento_id' => 1,

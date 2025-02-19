@@ -55,8 +55,10 @@ CREATE DATABASE prueba_tecnica_sinergia;
 5️⃣ Ejecutar migraciones y seeders
 
 Ejecuta las migraciones para generar las tablas necesarias:
+php artisan migrate
 
-php artisan migrate --seed
+Ejecuta los seed para insertar la data necesarias:
+php artisan db:seed
 
 Esto creará las tablas y poblará la base de datos con datos iniciales.
 
