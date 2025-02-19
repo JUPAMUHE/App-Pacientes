@@ -23,6 +23,8 @@ Ejecuta el siguiente comando en tu terminal:
 
 git clone https://github.com/JUPAMUHE/App-Pacientes.git
 
+Pasar a la rama master
+
 2️⃣ Instalar dependencias
 
 Ejecuta el siguiente comando en tu terminal:
