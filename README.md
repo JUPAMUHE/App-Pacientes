@@ -48,6 +48,10 @@ DB_PASSWORD=
 
 Asegúrate de cambiar DB_USERNAME y DB_PASSWORD según tu configuración.
 
+Luego ejecutar las siguientes lineas:
+php artisan key:generate
+php artisan storage:link
+
 4️⃣ Crear la base de datos
 
 Accede a MySQL y crea la base de datos manualmente o ejecuta:
