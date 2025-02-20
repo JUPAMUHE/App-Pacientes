@@ -40,6 +40,6 @@ class User extends Authenticatable
 
     public function getAuthIdentifierName()
     {
-        return 'numero_documento'; // Cambiamos el login de email a documento
+        return 'numero_documento'; 
     }
 }

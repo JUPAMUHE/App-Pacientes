@@ -174,13 +174,11 @@
                 });
             }
         });
-      
-
 
         $('#departamento_id').change(function() {
             var departamento_id = $(this).val();
             $('#municipio_id').html('<option value="">Cargando...</option>');
-
+ 
             if (departamento_id) {
                 $.ajax({
                     url: '{{ url("get-municipios") }}/' + departamento_id,

@@ -55,35 +55,62 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 
     <script>
         $(document).ready(function () {
-            $("#loginForm").submit(function (e) {
-                e.preventDefault();
 
-                $.ajax({
-                    url: "/api/login",
-                    type: "POST",
-                    data: {
-                        numero_documento: $("#numero_documento").val(),
-                        password: $("#password").val()
-                    },
-                    success: function (response) {
-                        $("#mensaje").html('<div class="alert alert-success">' + response.message + '</div>');
-
-                        localStorage.setItem("auth_token", response.token);
-
-                        setTimeout(() => {
-                            window.location.href = "/pacientes";
-                        }, 900);
-                    },
-                    error: function (xhr) {
-                        $("#mensaje").html('<div class="alert alert-danger">' + xhr.responseJSON.message + '</div>');
+            $("#loginForm").validate({
+                rules: {
+                    password: { required: true },
+                    numero_documento: { required: true, digits: true }
+                },
+                messages: {
+                    password: "La contraseña es un campo obligatorio.",
+                    numero_documento: {
+                        required: "El número de documento es obligatorio.",
+                        digits: "Solo puede ingresar valores numericos."
                     }
-                });
+                },
+                errorElement: "div",
+                errorClass: "text-danger",
+                errorPlacement: function (error, element) {
+                    error.addClass("mt-1");
+                    error.insertAfter(element);
+                },
+                highlight: function (element) {
+                    $(element).addClass("is-invalid");
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass("is-invalid");
+                },
+                submitHandler: function (form) {
+                    $.ajax({
+                        url: "/api/login",
+                        type: "POST",
+                        data: {
+                            numero_documento: $("#numero_documento").val(),
+                            password: $("#password").val()
+                        },
+                        success: function (response) {
+                            $("#mensaje").html('<div class="alert alert-success">' + response.message + '</div>');
+
+                            localStorage.setItem("auth_token", response.token);
+
+                            setTimeout(() => {
+                                window.location.href = "/pacientes";
+                            }, 900);
+                        },
+                        error: function (xhr) {
+                            $("#mensaje").html('<div class="alert alert-danger">' + xhr.responseJSON.message + '</div>');
+                        }
+                    });
+                }
             });
+
+            
         });
     </script>
 
-</body>
+</body> 
 </html>

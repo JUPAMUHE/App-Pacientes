@@ -16,31 +16,35 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
+        // Validar que ambos campos sean requeridos
         $request->validate([
-            'numero_documento' => 'required|exists:users,numero_documento',
+            'numero_documento' => 'required',
             'password' => 'required'
         ]);
-
-        // Buscar usuario por documento
+    
         $user = User::where('numero_documento', $request->numero_documento)->first();
-
-        // Validar contraseña
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Documento o contraseña incorrectos.'], 401);
+    
+        if (!$user) {
+            return response()->json(['message' => 'El documento ingresado no existe.'], 400);
         }
-
+    
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json(['message' => 'Contraseña incorrecta.'], 401);
+        }
+    
         // Autenticar al usuario
         Auth::login($user);
-
+    
         // Generar un token de autenticación
         $token = $user->createToken('authToken')->plainTextToken;
-
+    
         return response()->json([
             'message' => 'Inicio de sesión exitoso.',
             'token' => $token,
             'user' => $user
         ]);
     }
+    
 
     public function logout(Request $request)
     {
